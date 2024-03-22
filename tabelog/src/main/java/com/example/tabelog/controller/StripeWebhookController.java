@@ -17,7 +17,7 @@ import com.stripe.net.Webhook;
 @Controller
 public class StripeWebhookController {
     private final StripeService stripeService;
-
+    
     @Value("${stripe.api-key}")
     private String stripeApiKey;
 

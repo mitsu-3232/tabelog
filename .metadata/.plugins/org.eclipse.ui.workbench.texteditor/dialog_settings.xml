@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="tabelog"/>
+		<item key="selection" value="id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people"/>
+			<item value="id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people"/>
+			<item value="id, house_id, user_id, checkin_date, checkout_date, number_of_people, amount"/>
+			<item value="id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled"/>
+			<item value="id, name, furigana, age, gender, profession, postal_code, address, phone_number, email, password, role_id, enabled"/>
+			<item value="id, name, image_name, description, price, capacity, postal_code, address, phone_number"/>
+			<item value="id, name, category, image_name, description, price_high, price_low, business_day, open, close, capacity, postal_code, address, phone_number"/>
+			<item value="houses"/>
 			<item value="samuraitravel"/>
+			<item value="WebSecurity"/>
+			<item value="WebSecurityConfig"/>
 			<item value="save"/>
 			<item value="alt"/>
 			<item value="th:each"/>
 			<item value="th:href"/>
-			<item value="Boot"/>
 		</list>
 		<list key="replacehistory">
+			<item value="id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people"/>
+			<item value="reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people"/>
+			<item value="id, name, furigana, age, gender, profession, postal_code, address, phone_number, email, password, role_id, enabled"/>
+			<item value="id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled"/>
+			<item value="id, name, category, image_name, description, price_high, price_low, business_day, open, close, capacity, postal_code, address, phone_number"/>
+			<item value="restaurants"/>
 			<item value="tabelog"/>
+			<item value=""/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="267"/>
-		<item key="DIALOG_Y_ORIGIN" value="423"/>
+		<item key="DIALOG_Y_ORIGIN" value="455"/>
 		<item key="DIALOG_WIDTH" value="330"/>
-		<item key="DIALOG_HEIGHT" value="388"/>
+		<item key="DIALOG_HEIGHT" value="356"/>
 		<item key="DIALOG_FONT_NAME" value="1|Yu Gothic UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Yu Gothic UI"/>
 	</section>
 </section>

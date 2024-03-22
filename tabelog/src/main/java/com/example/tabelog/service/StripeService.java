@@ -26,7 +26,7 @@ public class StripeService {
     
     public StripeService(ReservationService reservationService) {
         this.reservationService = reservationService;
-    }    
+    }       
     
     // セッションを作成し、Stripeに必要な情報を返す
     public String createStripeSession(String houseName, ReservationRegisterForm reservationRegisterForm, HttpServletRequest httpServletRequest) {
@@ -85,6 +85,6 @@ public class StripeService {
                 e.printStackTrace();
             }
         });
-    }  
+    }    
 }
 
