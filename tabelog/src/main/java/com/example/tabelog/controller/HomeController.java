@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.tabelog.entity.House;
-import com.example.tabelog.repository.HouseRepository;
+import com.example.tabelog.entity.Restaurant;
+import com.example.tabelog.repository.RestaurantRepository;
 
 @Controller
 public class HomeController {
-    private final HouseRepository houseRepository;        
+    private final RestaurantRepository restaurantRepository;        
     
-    public HomeController(HouseRepository houseRepository) {
-        this.houseRepository = houseRepository;            
+    public HomeController(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;            
     } 
     
 	@GetMapping("/")
     public String index(Model model) {
-        List<House> newHouses = houseRepository.findTop10ByOrderByCreatedAtDesc();
-        model.addAttribute("newHouses", newHouses);       
+        List<Restaurant> newRestaurants = restaurantRepository.findTop10ByOrderByCreatedAtDesc();
+        model.addAttribute("newRestaurants", newRestaurants);       
         
         
         return "index";

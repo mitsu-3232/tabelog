@@ -23,18 +23,18 @@ public class Reservation {
     private Integer id;
     
     @ManyToOne
-    @JoinColumn(name = "house_id")
-    private House house; 
+    @JoinColumn(name = "restaurants_id")
+    private Restaurant restaurant; 
     
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;     
     
-    @Column(name = "checkin_date")
-    private LocalDate checkinDate;
+    @Column(name = "reserved_date")
+    private LocalDate reservedDate;
     
-    @Column(name = "checkout_date")
-    private LocalDate checkoutDate;   
+    @Column(name = "reserved_time")
+    private LocalDate reservedTime;   
     
     @Column(name = "number_of_people")
     private Integer numberOfPeople; 

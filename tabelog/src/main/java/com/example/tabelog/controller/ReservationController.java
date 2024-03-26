@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.tabelog.entity.House;
 import com.example.tabelog.entity.Reservation;
+import com.example.tabelog.entity.Restaurant;
 import com.example.tabelog.entity.User;
 import com.example.tabelog.form.ReservationInputForm;
 import com.example.tabelog.form.ReservationRegisterForm;
-import com.example.tabelog.repository.HouseRepository;
 import com.example.tabelog.repository.ReservationRepository;
+import com.example.tabelog.repository.RestaurantRepository;
 import com.example.tabelog.security.UserDetailsImpl;
 import com.example.tabelog.service.ReservationService;
 import com.example.tabelog.service.StripeService;
@@ -33,13 +33,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class ReservationController {
     private final ReservationRepository reservationRepository;      
-    private final HouseRepository houseRepository;
+    private final RestaurantRepository restaurantRepository;
     private final ReservationService reservationService; 
     private final StripeService stripeService; 
     
-    public ReservationController(ReservationRepository reservationRepository, HouseRepository houseRepository, ReservationService reservationService, StripeService stripeService) { 
+    public ReservationController(ReservationRepository reservationRepository, RestaurantRepository restaurantRepository, ReservationService reservationService, StripeService stripeService) { 
         this.reservationRepository = reservationRepository; 
-        this.houseRepository = houseRepository;
+        this.restaurantRepository = restaurantRepository;
         this.reservationService = reservationService;
         this.stripeService = stripeService;
     }    
@@ -55,16 +55,16 @@ public class ReservationController {
         return "reservations/index";
     }
     
-    @GetMapping("/houses/{id}/reservations/input")
+    @GetMapping("/restaurants/{id}/reservations/input")
     public String input(@PathVariable(name = "id") Integer id,
                         @ModelAttribute @Validated ReservationInputForm reservationInputForm,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes,
                         Model model)
     {   
-        House house = houseRepository.getReferenceById(id);
+        Restaurant restaurant = restaurantRepository.getReferenceById(id);
         Integer numberOfPeople = reservationInputForm.getNumberOfPeople();   
-        Integer capacity = house.getCapacity();
+        Integer capacity = restaurant.getCapacity();
         
         if (numberOfPeople != null) {
             if (!reservationService.isWithinCapacity(numberOfPeople, capacity)) {
@@ -74,39 +74,40 @@ public class ReservationController {
         }         
         
         if (bindingResult.hasErrors()) {            
-            model.addAttribute("house", house);            
+            model.addAttribute("restaurant", restaurant);            
             model.addAttribute("errorMessage", "予約内容に不備があります。"); 
-            return "houses/show";
+            return "restaurants/show";
         }
         
         redirectAttributes.addFlashAttribute("reservationInputForm", reservationInputForm);           
         
-        return "redirect:/houses/{id}/reservations/confirm";
+        return "redirect:/restaurants/{id}/reservations/confirm";
     }
     
-    @GetMapping("/houses/{id}/reservations/confirm")
+    @GetMapping("/restaurants/{id}/reservations/confirm")
     public String confirm(@PathVariable(name = "id") Integer id,
                           @ModelAttribute ReservationInputForm reservationInputForm,
                           @AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
                           HttpServletRequest httpServletRequest,
                           Model model) 
     {        
-        House house = houseRepository.getReferenceById(id);
+        Restaurant restaurant = restaurantRepository.getReferenceById(id);
         User user = userDetailsImpl.getUser(); 
                 
-        //チェックイン日とチェックアウト日を取得する
-        LocalDate checkinDate = reservationInputForm.getCheckinDate();
-        LocalDate checkoutDate = reservationInputForm.getCheckoutDate();
- 
-        // 宿泊料金を計算する
-        Integer price = house.getPrice();        
+        //チェックイン・アウト日を取得する→予約日を取得する
+        LocalDate reservedDate = reservationInputForm.getReservedDate();
+        
+        /* 
+        // 宿泊料金を計算する 修正必要
+        Integer price = restaurant.getPrice();        
         Integer amount = reservationService.calculateAmount(checkinDate, checkoutDate, price);
+         /* 
+          
+        ReservationRegisterForm reservationRegisterForm = new ReservationRegisterForm(restaurant.getId(), user.getId(), reservedDate.toString(), reservedTime.toString(), reservationInputForm.getNumberOfPeople(), amount);
         
-        ReservationRegisterForm reservationRegisterForm = new ReservationRegisterForm(house.getId(), user.getId(), checkinDate.toString(), checkoutDate.toString(), reservationInputForm.getNumberOfPeople(), amount);
+        String sessionId = stripeService.createStripeSession(restaurant.getName(), reservationRegisterForm, httpServletRequest);
         
-        String sessionId = stripeService.createStripeSession(house.getName(), reservationRegisterForm, httpServletRequest);
-        
-        model.addAttribute("house", house);  
+        model.addAttribute("restaurant", restaurant);  
         model.addAttribute("reservationRegisterForm", reservationRegisterForm);  
         model.addAttribute("sessionId", sessionId);
         
@@ -114,7 +115,7 @@ public class ReservationController {
     }  
 
     /*    
-    @PostMapping("/houses/{id}/reservations/create")
+    @PostMapping("/restaurants/{id}/reservations/create")
     public String create(@ModelAttribute ReservationRegisterForm reservationRegisterForm) {                
         reservationService.create(reservationRegisterForm);        
         
