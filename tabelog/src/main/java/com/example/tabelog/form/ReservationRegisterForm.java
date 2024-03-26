@@ -15,6 +15,4 @@ public class ReservationRegisterForm {
     private String reservedTime;    
     
     private Integer numberOfPeople;
-    
-    private Integer amount;    
 }

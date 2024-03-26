@@ -20,23 +20,23 @@ import com.example.tabelog.entity.Restaurant;
 import com.example.tabelog.form.RestaurantEditForm;
 import com.example.tabelog.form.RestaurantRegisterForm;
 import com.example.tabelog.repository.RestaurantRepository;
-import com.example.tabelog.service.Restaurantservice;
+import com.example.tabelog.service.RestaurantService;
 
 @Controller
 @RequestMapping("/admin/restaurants")
 
 public class AdminRestaurantController {
     private final RestaurantRepository restaurantRepository;       
-    private final Restaurantservice restaurantservice;    
+    private final RestaurantService restaurantservice;    
     
-    public AdminRestaurantController(RestaurantRepository restaurantRepository, Restaurantservice restaurantservice) {
+    public AdminRestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantservice) {
         this.restaurantRepository = restaurantRepository;
-        this.Restaurantservice = restaurantservice;  
+        this.restaurantservice = restaurantservice;  
     }	
     
     @GetMapping
     public String index(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable, @RequestParam(name = "keyword", required = false) String keyword) {
-        Page<Restaurante> restaurantPage;
+        Page<Restaurant> restaurantPage;
        
         if (keyword != null && !keyword.isEmpty()) {
         	restaurantPage = restaurantRepository.findByNameLike("%" + keyword + "%", pageable);                
@@ -52,7 +52,7 @@ public class AdminRestaurantController {
     
     @GetMapping("/{id}")
     public String show(@PathVariable(name = "id") Integer id, Model model) {
-    	Restaurante Restaurant = restaurantRepository.getReferenceById(id);
+    	Restaurant restaurant = restaurantRepository.getReferenceById(id);
         
         model.addAttribute("restaurant", restaurant);
         
@@ -80,8 +80,22 @@ public class AdminRestaurantController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable(name = "id") Integer id, Model model) {
         Restaurant restaurant = restaurantRepository.getReferenceById(id);
-        String imageName = restaurant.getImageName();
-        RestaurantEditForm restaurantEditForm = new RestaurantEditForm(restaurante.getId(), restaurant.getName(), null, restaurant.getDescription(), restaurant.getPrice(), restaurant.getCapacity(), restaurant.getPostalCode(), restaurant.getAddress(), restaurant.getPhoneNumber());
+        String imageName = restaurant.getImageFile();
+        RestaurantEditForm restaurantEditForm = 
+        		new RestaurantEditForm(
+        				restaurant.getId(),
+        				restaurant.getName(),
+        				restaurant.getCategory(),
+        				null,
+        				restaurant.getDescription(),
+        				restaurant.getPriceHigh(),
+        				restaurant.getPriceLow(),
+        				restaurant.getCapacity(),
+        				restaurant.getOpenTime(),
+        				restaurant.getCloseTime(),
+        				restaurant.getPostalCode(),
+        				restaurant.getAddress(),
+        				restaurant.getPhoneNumber());
         
         model.addAttribute("imageName", imageName);
         model.addAttribute("restaurantEditForm", restaurantEditForm);

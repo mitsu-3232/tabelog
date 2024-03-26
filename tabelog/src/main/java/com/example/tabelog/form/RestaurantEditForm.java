@@ -1,5 +1,7 @@
 package com.example.tabelog.form;
 
+import java.time.LocalTime;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.Min;
@@ -21,7 +23,7 @@ public class RestaurantEditForm {
     @NotBlank(message = "カテゴリを選択してください。")
     private String category;
     
-    private MultipartFile imageFile;
+    private MultipartFile image_name;
     
     @NotBlank(message = "説明を入力してください。")
     private String description; 
@@ -34,19 +36,15 @@ public class RestaurantEditForm {
     @Min(value = 1, message = "料金は1円以上に設定してください。")
     private Integer price_low;
     
-    @NotNull(message = "定員を入力してください。")
+    @NotNull(message = "予約可能人数を入力してください。")
     @Min(value = 1, message = "定員は1人以上に設定してください。")
     private Integer capacity;  
     
-    //休業日を設定させるかはまだ未確定。    
-    @NotNull(message = "休業日を入力してください。")
-    private Integer business_day;   
-    
     @NotNull(message = "営業開始時間を入力してください。")
-    private Integer open;
+    private LocalTime openTime;
     
     @NotNull(message = "営業終了時間を入力してください。")
-    private Integer close; 
+    private LocalTime closeTime; 
     
     @NotBlank(message = "郵便番号を入力してください。")
     private String postalCode;

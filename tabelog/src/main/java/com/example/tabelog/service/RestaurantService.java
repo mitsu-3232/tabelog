@@ -16,10 +16,10 @@ import com.example.tabelog.form.RestaurantRegisterForm;
 import com.example.tabelog.repository.RestaurantRepository;
  
  @Service
- public class Restaurantservice {
+ public class RestaurantService {
      private final RestaurantRepository restaurantRepository;    
      
-     public Restaurantservice(RestaurantRepository restaurantRepository) {
+     public RestaurantService(RestaurantRepository restaurantRepository) {
          this.restaurantRepository = restaurantRepository;        
      }    
      
@@ -32,14 +32,18 @@ import com.example.tabelog.repository.RestaurantRepository;
              String imageName = imageFile.getOriginalFilename(); 
              String hashedImageName = generateNewFileName(imageName);
              Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-             copyImageFile(imageFile, filePath);
-             restaurant.setImageName(hashedImageName);
+             copyImageName(imageFile, filePath);
+             restaurant.setImageFile(hashedImageName);
          }
          
-         restaurant.setName(restaurantRegisterForm.getName());                
-         restaurant.setDescription(restaurantRegisterForm.getDescription());
-         restaurant.setPrice(restaurantRegisterForm.getPrice());
+         restaurant.setName(restaurantRegisterForm.getName()); 
+         restaurant.setCategory(restaurantRegisterForm.getCategory());
          restaurant.setCapacity(restaurantRegisterForm.getCapacity());
+         restaurant.setDescription(restaurantRegisterForm.getDescription());
+         restaurant.setPriceHigh(restaurantRegisterForm.getPriceHigh());
+         restaurant.setPriceLow(restaurantRegisterForm.getPriceLow());
+         restaurant.setOpenTime(restaurantRegisterForm.getOpenTime());
+         restaurant.setCloseTime(restaurantRegisterForm.getCloseTime());
          restaurant.setPostalCode(restaurantRegisterForm.getPostalCode());
          restaurant.setAddress(restaurantRegisterForm.getAddress());
          restaurant.setPhoneNumber(restaurantRegisterForm.getPhoneNumber());
@@ -50,20 +54,24 @@ import com.example.tabelog.repository.RestaurantRepository;
      @Transactional
      public void update(RestaurantEditForm restaurantEditForm) {
          Restaurant restaurant = restaurantRepository.getReferenceById(restaurantEditForm.getId());
-         MultipartFile imageFile = restaurantEditForm.getImageFile();
+         MultipartFile imageFile = restaurantEditForm.getImage_name();
          
          if (!imageFile.isEmpty()) {
              String imageName = imageFile.getOriginalFilename(); 
              String hashedImageName = generateNewFileName(imageName);
              Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-             copyImageFile(imageFile, filePath);
-             restaurant.setImageName(hashedImageName);
+             copyImageName(imageFile, filePath);
+             restaurant.setImageFile(hashedImageName);
          }
          
-         restaurant.setName(restaurantEditForm.getName());                
-         restaurant.setDescription(restaurantEditForm.getDescription());
-         restaurant.setPrice(restaurantEditForm.getPrice());
+         restaurant.setName(restaurantEditForm.getName()); 
+         restaurant.setCategory(restaurantEditForm.getCategory());
          restaurant.setCapacity(restaurantEditForm.getCapacity());
+         restaurant.setDescription(restaurantEditForm.getDescription());
+         restaurant.setPriceHigh(restaurantEditForm.getPrice_high());
+         restaurant.setPriceLow(restaurantEditForm.getPrice_low());
+         restaurant.setOpenTime(restaurantEditForm.getOpenTime());
+         restaurant.setCloseTime(restaurantEditForm.getCloseTime());
          restaurant.setPostalCode(restaurantEditForm.getPostalCode());
          restaurant.setAddress(restaurantEditForm.getAddress());
          restaurant.setPhoneNumber(restaurantEditForm.getPhoneNumber());
@@ -82,9 +90,9 @@ import com.example.tabelog.repository.RestaurantRepository;
      }     
      
      // 画像ファイルを指定したファイルにコピーする
-     public void copyImageFile(MultipartFile imageFile, Path filePath) {           
+     public void copyImageName(MultipartFile imageName, Path filePath) {           
          try {
-             Files.copy(imageFile.getInputStream(), filePath);
+             Files.copy(imageName.getInputStream(), filePath);
          } catch (IOException e) {
              e.printStackTrace();
          }          

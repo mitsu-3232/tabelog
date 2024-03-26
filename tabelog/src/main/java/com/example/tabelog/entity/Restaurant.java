@@ -1,6 +1,7 @@
 package com.example.tabelog.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,8 +27,8 @@ public class Restaurant {
     @Column(name = "category")
     private String category;
     
-    @Column(name = "image_name")
-    private String imageName;
+    @Column(name = "image_file")
+    private String imageFile;
 
     @Column(name = "description")
     private String description;
@@ -38,14 +39,11 @@ public class Restaurant {
     @Column(name = "price_low")
     private Integer priceLow;
 
-    @Column(name = "business_day")
-    private String businessDay;
-
     @Column(name = "open")
-    private Integer open;
+    private LocalTime openTime;
     
     @Column(name = "close")
-    private Integer close;
+    private LocalTime closeTime;
     
     @Column(name = "postal_code")
     private String postalCode;
@@ -56,6 +54,9 @@ public class Restaurant {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "capacity")
+    private Integer capacity;
+    
     @Column(name = "created_at", insertable = false, updatable = false)
     private Timestamp createdAt;
 

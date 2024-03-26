@@ -43,7 +43,6 @@ public class StripeService {
                                    SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                        .setName(houseName)
                                        .build())
-                               .setUnitAmount((long)reservationRegisterForm.getAmount())
                                .setCurrency("jpy")                                
                                .build())
                        .setQuantity(1L)
@@ -53,12 +52,10 @@ public class StripeService {
                .setCancelUrl(requestUrl.replace("/reservations/confirm", ""))
                .setPaymentIntentData(
                    SessionCreateParams.PaymentIntentData.builder()
-                       .putMetadata("houseId", reservationRegisterForm.getHouseId().toString())
+                       .putMetadata("restaurantId", reservationRegisterForm.getRestaurantId().toString())
                        .putMetadata("userId", reservationRegisterForm.getUserId().toString())
-                       .putMetadata("checkinDate", reservationRegisterForm.getCheckinDate())
-                       .putMetadata("checkoutDate", reservationRegisterForm.getCheckoutDate())
+                       .putMetadata("reservedDate", reservationRegisterForm.getReservedDate())
                        .putMetadata("numberOfPeople", reservationRegisterForm.getNumberOfPeople().toString())
-                       .putMetadata("amount", reservationRegisterForm.getAmount().toString())
                        .build())
                .build();
        try {

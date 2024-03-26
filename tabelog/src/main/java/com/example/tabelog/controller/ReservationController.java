@@ -1,6 +1,7 @@
 package com.example.tabelog.controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -91,19 +92,27 @@ public class ReservationController {
                           HttpServletRequest httpServletRequest,
                           Model model) 
     {        
+
         Restaurant restaurant = restaurantRepository.getReferenceById(id);
         User user = userDetailsImpl.getUser(); 
                 
         //チェックイン・アウト日を取得する→予約日を取得する
         LocalDate reservedDate = reservationInputForm.getReservedDate();
+        LocalTime reservedTime = reservationInputForm.getReservedTijme();
         
-        /* 
+        /*//
         // 宿泊料金を計算する 修正必要
         Integer price = restaurant.getPrice();        
         Integer amount = reservationService.calculateAmount(checkinDate, checkoutDate, price);
-         /* 
+         */ 
           
-        ReservationRegisterForm reservationRegisterForm = new ReservationRegisterForm(restaurant.getId(), user.getId(), reservedDate.toString(), reservedTime.toString(), reservationInputForm.getNumberOfPeople(), amount);
+        ReservationRegisterForm reservationRegisterForm = 
+        		new ReservationRegisterForm(
+        				restaurant.getId(),
+        				user.getId(),
+        				reservedDate.toString(),
+        				reservedTime.toString(),
+        				reservationInputForm.getNumberOfPeople());
         
         String sessionId = stripeService.createStripeSession(restaurant.getName(), reservationRegisterForm, httpServletRequest);
         
@@ -112,7 +121,8 @@ public class ReservationController {
         model.addAttribute("sessionId", sessionId);
         
         return "reservations/confirm";
-    }  
+    }
+     
 
     /*    
     @PostMapping("/restaurants/{id}/reservations/create")

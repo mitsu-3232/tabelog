@@ -36,25 +36,25 @@ public class RestaurantController {
                 
         if (keyword != null && !keyword.isEmpty()) {
             if (order != null && order.equals("priceAsc")) {
-                restaurantPage = restaurantRepository.findByNameLikeOrAddressLikeOrderByPriceAsc("%" + keyword + "%", "%" + keyword + "%", pageable);
+                restaurantPage = restaurantRepository.findByNameLikeOrAddressLikeOrderByPriceLowAsc("%" + keyword + "%", "%" + keyword + "%", pageable);
             } else {
                 restaurantPage = restaurantRepository.findByNameLikeOrAddressLikeOrderByCreatedAtDesc("%" + keyword + "%", "%" + keyword + "%", pageable);
             }  
         } else if (area != null && !area.isEmpty()) {
             if (order != null && order.equals("priceAsc")) {
-                restaurantPage = restaurantRepository.findByAddressLikeOrderByPriceAsc("%" + area + "%", pageable);
+                restaurantPage = restaurantRepository.findByAddressLikeOrderByPriceLowAsc("%" + area + "%", pageable);
             } else {
                 restaurantPage = restaurantRepository.findByAddressLikeOrderByCreatedAtDesc("%" + area + "%", pageable);
             }     
         } else if (price != null) {
             if (order != null && order.equals("priceAsc")) {
-                restaurantPage = restaurantRepository.findByPriceLessThanEqualOrderByPriceAsc(price, pageable);
+                restaurantPage = restaurantRepository.findByPriceLowLessThanEqualOrderByPriceLowAsc(price, pageable);
             } else {
-                restaurantPage = restaurantRepository.findByPriceLessThanEqualOrderByCreatedAtDesc(price, pageable);
+                restaurantPage = restaurantRepository.findByPriceLowLessThanEqualOrderByCreatedAtDesc(price, pageable);
             }            
         } else {
             if (order != null && order.equals("priceAsc")) {
-                restaurantPage = restaurantRepository.findAllByOrderByPriceAsc(pageable);
+                restaurantPage = restaurantRepository.findAllByOrderByPriceLowAsc(pageable);
             } else {
                 restaurantPage = restaurantRepository.findAllByOrderByCreatedAtDesc(pageable);   
             }     
