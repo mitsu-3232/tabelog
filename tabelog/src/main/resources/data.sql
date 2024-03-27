@@ -1,5 +1,5 @@
 -- 店舗情報テーブル --
-INSERT IGNORE INTO restaurants (id, name, category, image_file, description, price_high, price_low, open_time, close_time, postal_code, address, phone_number) VALUES (1, 'Rcoffee', 'カフェ', 'house01.jpg', '最寄り駅から徒歩10分。自然豊かで閑静な場所にあります。長期滞在も可能です。', 2000, 1000, 6, '9:00', '19:00'. '073-0145', '北海道砂川市西五条南X-XX-XX', '012-345-678');
+INSERT IGNORE INTO restaurants (id, name, category, image_file, description, price_high, price_low, capacity, open_time, close_time, postal_code, address, phone_number) VALUES (1, 'Rcoffee', 'カフェ', 'house01.jpg', '最寄り駅から徒歩10分。自然豊かで閑静な場所にあります。長期滞在も可能です。', 2000, 1000, 6, '9:00', '19:00', '073-0145', '北海道砂川市西五条南X-XX-XX', '012-345-678');
 
 -- rolesテーブル
 INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_GENERAL');

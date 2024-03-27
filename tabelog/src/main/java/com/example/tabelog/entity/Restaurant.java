@@ -39,10 +39,10 @@ public class Restaurant {
     @Column(name = "price_low")
     private Integer priceLow;
 
-    @Column(name = "open")
+    @Column(name = "open_time")
     private LocalTime openTime;
     
-    @Column(name = "close")
+    @Column(name = "close_time")
     private LocalTime closeTime;
     
     @Column(name = "postal_code")
