@@ -23,21 +23,21 @@ public class RestaurantEditForm {
     @NotBlank(message = "カテゴリを選択してください。")
     private String category;
     
-    private MultipartFile image_name;
+    private MultipartFile imageFile;
     
     @NotBlank(message = "説明を入力してください。")
     private String description; 
     
     @NotNull(message = "上限金額を選択してください。")
     @Min(value = 1, message = "料金は1円以上に設定してください。")
-    private Integer price_high;
+    private Integer priceHigh;
     
     @NotNull(message = "下限金額を選択してください。")
     @Min(value = 1, message = "料金は1円以上に設定してください。")
-    private Integer price_low;
+    private Integer priceLow;
     
-    @NotNull(message = "予約可能人数を入力してください。")
-    @Min(value = 1, message = "定員は1人以上に設定してください。")
+    @NotNull(message = "予約人数を入力してください。")
+    @Min(value = 1, message = "予約人数は1人以上に設定してください。")
     private Integer capacity;  
     
     @NotNull(message = "営業開始時間を入力してください。")

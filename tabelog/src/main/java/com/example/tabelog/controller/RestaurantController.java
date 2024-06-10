@@ -27,7 +27,7 @@ public class RestaurantController {
     @GetMapping
     public String index(@RequestParam(name = "keyword", required = false) String keyword,
                         @RequestParam(name = "area", required = false) String area,
-                        @RequestParam(name = "price", required = false) Integer price,                        
+                        @RequestParam(name = "price", required = false) String price,                        
                         @RequestParam(name = "order", required = false) String order,                        
                         @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,
                         Model model) 
@@ -47,10 +47,19 @@ public class RestaurantController {
                 restaurantPage = restaurantRepository.findByAddressLikeOrderByCreatedAtDesc("%" + area + "%", pageable);
             }     
         } else if (price != null) {
+        	// "0-1000"を「0」と「1000」に分けて
+        	String[] prices = price.split("-");
+        	Integer priceLow = Integer.parseInt(prices[0]);
+        	Integer priceHigh = Integer.parseInt(prices[1]);
+        	
             if (order != null && order.equals("priceAsc")) {
-                restaurantPage = restaurantRepository.findByPriceLowLessThanEqualOrderByPriceLowAsc(price, pageable);
+                restaurantPage = 
+                		restaurantRepository.findByPriceLowOrPriceHighOrderByPriceLowAsc(
+                				priceLow, priceHigh, pageable);
             } else {
-                restaurantPage = restaurantRepository.findByPriceLowLessThanEqualOrderByCreatedAtDesc(price, pageable);
+                restaurantPage = 
+                		restaurantRepository.findByPriceLowOrPriceHighOrderByCreatedAtDesc(
+                				priceLow, priceHigh, pageable);
             }            
         } else {
             if (order != null && order.equals("priceAsc")) {

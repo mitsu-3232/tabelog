@@ -19,8 +19,8 @@
                              <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0">
                                      <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-                                     <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>
-                                     <li class="breadcrumb-item"><a th:href="@{/houses/__${house.getId()}__}">民宿詳細</a></li>
+                                     <li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
+                                     <li class="breadcrumb-item"><a th:href="@{/restaurants/__${restaurant.getId()}__}">店舗詳細</a></li>
                                      <li class="breadcrumb-item active" aria-current="page">予約内容確認</li>
                                  </ol>
                              </nav>
@@ -32,31 +32,31 @@
                                  <div class="container mb-4">
                                      <div class="row pb-2 mb-2 border-bottom">
                                          <div class="col-6">
-                                             <span class="fw-bold">チェックイン日</span>
+                                             <span class="fw-bold">予約日</span>
                                          </div>
                  
                                          <div class="col">
-                                             <span th:text="*{checkinDate}"></span>
+                                             <span th:text="*{reservedDate}"></span>
                                          </div>
                                      </div>
-                                 </div>     
+                                 </div>
                                  
                                  <div class="container mb-4">
                                      <div class="row pb-2 mb-2 border-bottom">
                                          <div class="col-6">
-                                             <span class="fw-bold">チェックアウト日</span>
+                                             <span class="fw-bold">予約時間</span>
                                          </div>
                  
                                          <div class="col">
-                                             <span th:text="*{checkoutDate}"></span>
+                                             <span th:text="*{reservedTime}"></span>
                                          </div>
                                      </div>
-                                 </div> 
+                                 </div>      
                                  
                                  <div class="container mb-4">
                                      <div class="row pb-2 mb-2 border-bottom">
                                          <div class="col-6">
-                                             <span class="fw-bold">宿泊人数</span>
+                                             <span class="fw-bold">予約人数</span>
                                          </div>
                  
                                          <div class="col">
@@ -65,18 +65,6 @@
                                      </div>
                                  </div> 
                                  
-                                 <div class="container mb-4">
-                                     <div class="row pb-2 mb-2 border-bottom">
-                                         <div class="col-6">
-                                             <span class="fw-bold">宿泊料金</span>
-                                         </div>
-                 
-                                         <div class="col">
-                                             <span th:text="*{#numbers.formatInteger(amount, 1, 'COMMA') + '円'}"></span>
-                                         </div>
-                                     </div>
-                                 </div>
-             
                                  <div class="d-flex justify-content-center">
                                       <button id="paymentButton" class="btn text-white shadow-sm w-100 tabelog-btn">決済する</button>
                                  </div>

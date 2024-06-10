@@ -6,7 +6,7 @@
               
          <div th:replace="~{fragment :: styles}"></div> 
          
-         <title>民宿詳細</title>       
+         <title>店舗詳細</title>       
      </head>
      <body>
          <div class="tabelog-wrapper">
@@ -19,22 +19,22 @@
                          <div class="col-xl-5 col-lg-6 col-md-8">
                              <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0">                        
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>
-                                     <li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
+                                     <li class="breadcrumb-item"><a th:href="@{/admin/restaurants}">店舗一覧</a></li>
+                                     <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
                                  </ol>
                              </nav> 
                              
-                             <h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>
+                             <h1 class="mb-4 text-center" th:text="${restaurant.getName()}"></h1>
                              
                              <div class="d-flex justify-content-end align-items-end mb-3">                    
                                  <div>
-                                     <a th:href="@{/admin/houses/__${house.getId()}__/edit}">編集</a>                                   
+                                     <a th:href="@{/admin/restaurants/__${restaurant.getId()}__/edit}">編集</a>                                   
                                  </div>
                              </div>                                                 
                              
                              <div class="mb-3">
-                                 <img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}" class="w-100" alt="民宿画像">
-                                 <img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+                                 <img th:if="${restaurant.getImageFile()}" th:src="@{/storage/__${restaurant.getImageFile()}__}" class="w-100" alt="店舗画像">
+                                 <img th:unless="${restaurant.getImageFile()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
                              </div>   
                              
                              <div class="container mb-4">
@@ -44,17 +44,17 @@
                                      </div>                                                  
              
                                      <div class="col">
-                                         <span th:text="${house.getId()}"></span>
+                                         <span th:text="${restaurant.getId()}"></span>
                                      </div>
                                  </div>
              
                                  <div class="row pb-2 mb-2 border-bottom">
                                      <div class="col-4">
-                                         <span class="fw-bold">民宿名</span>
+                                         <span class="fw-bold">店舗名</span>
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${house.getName()}"></span>
+                                         <span th:text="${restaurant.getName()}"></span>
                                      </div>
                                  </div>                    
              
@@ -64,27 +64,37 @@
                                      </div>
              
                                      <div class="col">
-                                         <span class="tabelog-pre-wrap" th:text="${house.getDescription()}"></span>
+                                         <span class="tabelog-pre-wrap" th:text="${restaurant.getDescription()}"></span>
                                      </div>
                                  </div>
              
                                  <div class="row pb-2 mb-2 border-bottom">
                                      <div class="col-4">
-                                         <span class="fw-bold">宿泊料金</span>
+                                         <span class="fw-bold">上限金額</span>
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円'}"></span>
+                                         <span th:text="${#numbers.formatInteger(restaurant.getPriceHigh(), 1, 'COMMA') + '円'}"></span>
+                                     </div>
+                                 </div> 
+                                 
+                                 <div class="row pb-2 mb-2 border-bottom">
+                                     <div class="col-4">
+                                         <span class="fw-bold">下限金額</span>
+                                     </div>
+             
+                                     <div class="col">
+                                         <span th:text="${#numbers.formatInteger(restaurant.getPriceLow(), 1, 'COMMA') + '円'}"></span>
                                      </div>
                                  </div> 
                                  
                                 <div class="row pb-2 mb-2 border-bottom">
                                      <div class="col-4">
-                                         <span class="fw-bold">定員</span>
+                                         <span class="fw-bold">上限人数</span>
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${house.getCapacity() + '人'}"></span>
+                                         <span th:text="${restaurant.getCapacity() + '人'}"></span>
                                      </div>
                                  </div>                                
                                  
@@ -94,7 +104,7 @@
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${house.getPostalCode()}"></span>
+                                         <span th:text="${restaurant.getPostalCode()}"></span>
                                      </div>
                                  </div>   
                                  
@@ -104,7 +114,7 @@
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${house.getAddress()}"></span>
+                                         <span th:text="${restaurant.getAddress()}"></span>
                                      </div>
                                  </div>   
                                  
@@ -114,7 +124,7 @@
                                      </div>
              
                                      <div class="col">
-                                         <span th:text="${house.getPhoneNumber()}"></span>
+                                         <span th:text="${restaurant.getPhoneNumber()}"></span>
                                      </div>
                                  </div>                                
                              </div>                                                  

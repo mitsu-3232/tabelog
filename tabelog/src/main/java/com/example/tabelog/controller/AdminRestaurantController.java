@@ -80,7 +80,7 @@ public class AdminRestaurantController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable(name = "id") Integer id, Model model) {
         Restaurant restaurant = restaurantRepository.getReferenceById(id);
-        String imageName = restaurant.getImageFile();
+        String imageName = restaurant.getImageName();
         RestaurantEditForm restaurantEditForm = 
         		new RestaurantEditForm(
         				restaurant.getId(),

@@ -6,33 +6,30 @@
               
          <div th:replace="~{fragment :: styles}"></div>
          
-         <title>民宿情報編集</title>       
+         <title>店舗登録</title>       
      </head>
      <body>
-         <div class="tabelog-wrapper">
+         <div class="samuraitravel-wrapper">
              <!-- ヘッダー -->
              <div th:replace="~{fragment :: header}"></div>
              
              <main>
-                 <div class="container pt-4 pb-5 tabelog-container">
+                 <div class="container pt-4 pb-5 samuraitravel-container">
                      <div class="row justify-content-center">
                          <div class="col-xl-5 col-lg-6 col-md-8">
                              <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0"> 
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses}">民宿一覧</a></li>  
-                                     <li class="breadcrumb-item"><a th:href="@{/admin/houses/__${houseEditForm.getId()}__}">民宿詳細</a></li>                                                           
-                                     <li class="breadcrumb-item active" aria-current="page">民宿情報編集</li>
+                                     <li class="breadcrumb-item"><a th:href="@{/admin/restaurants}">店舗一覧</a></li>                                                           
+                                     <li class="breadcrumb-item active" aria-current="page">店舗登録</li>
                                  </ol>
                              </nav> 
                              
-                             <h1 class="mb-4 text-center">民宿情報編集</h1>         
+                             <h1 class="mb-4 text-center">店舗登録</h1>         
                              
-                             <form method="post" th:action="@{/admin/houses/__${houseEditForm.getId()}__/update}" th:object="${houseEditForm}" enctype="multipart/form-data">   
-                                 <input type="hidden" th:field="*{id}">
-                                                                                          
+                             <form method="post" th:action="@{/admin/restaurants/create}" th:object="${restaurantRegisterForm}" enctype="multipart/form-data">                                                            
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
-                                         <label for="name" class="col-form-label text-md-left fw-bold">民宿名</label>
+                                         <label for="name" class="col-form-label text-md-left fw-bold">店舗名</label>
                                      </div>
                                      <div class="col-md-8">                                    
                                          <div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>                                    
@@ -42,17 +39,16 @@
                                  
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
-                                         <label for="imageName" class="col-form-label text-md-left fw-bold">民宿画像</label>
+                                         <label for="imageFile" class="col-form-label text-md-left fw-bold">店舗画像</label>
                                      </div>                                    
                                      <div class="col-md-8">
-                                         <div th:if="${#fields.hasErrors('imageName')}" class="text-danger small mb-2" th:errors="*{imageName}"></div>  
-                                         <input type="file" class="form-control" th:field="*{imageName}">
+                                         <div th:if="${#fields.hasErrors('imageFile')}" class="text-danger small mb-2" th:errors="*{imageFile}"></div>  
+                                         <input type="file" class="form-control" th:field="*{imageFile}">
                                      </div>
                                  </div>   
                                  
                                  <!-- 選択された画像の表示場所 -->
-                                 <div th:if="${imageName}" class="row" id="imagePreview"><img th:src="@{/storage/__${imageName}__}" class="mb-3"></div>
-                                 <div th:unless="${imageName}" class="row" id="imagePreview"></div>                                 
+                                 <div class="row" id="imagePreview"></div>                                 
                                  
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
@@ -66,23 +62,53 @@
                                  
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
-                                         <label for="price" class="col-form-label text-md-left fw-bold">宿泊料金（単位：円）</label>
+                                         <label for="priceHigh" class="col-form-label text-md-left fw-bold">上限料金（単位：円）</label>
                                      </div> 
                                      <div class="col-md-8">
-                                         <div th:if="${#fields.hasErrors('price')}" class="text-danger small mb-2" th:errors="*{price}"></div>
-                                         <input type="number" class="form-control" th:field="*{price}">                                
+                                         <div th:if="${#fields.hasErrors('priceHigh')}" class="text-danger small mb-2" th:errors="*{priceHigh}"></div>
+                                         <input type="number" class="form-control" th:field="*{priceHigh}">                                
                                      </div>                                    
-                                 </div> 
+                                 </div>
                                  
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
-                                         <label for="capacity" class="col-form-label text-md-left fw-bold">定員（単位：人）</label>
+                                         <label for="priceLow" class="col-form-label text-md-left fw-bold">下限料金（単位：円）</label>
+                                     </div> 
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('priceLow')}" class="text-danger small mb-2" th:errors="*{priceLow}"></div>
+                                         <input type="number" class="form-control" th:field="*{priceLow}">                                
+                                     </div>                                    
+                                 </div>
+                                 
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="capacity" class="col-form-label text-md-left fw-bold">上限人数（単位：人）</label>
                                      </div> 
                                      <div class="col-md-8">
                                          <div th:if="${#fields.hasErrors('capacity')}" class="text-danger small mb-2" th:errors="*{capacity}"></div>
                                          <input type="number" class="form-control" th:field="*{capacity}">                                
                                      </div>                                    
-                                 </div>                                                                
+                                 </div> 
+                                 
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="openTime" class="col-form-label text-md-left fw-bold">営業開始時間</label>
+                                     </div>
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('openTime')}" class="text-danger small mb-2" th:errors="*{openTime}"></div>
+                                         <input type="text" class="form-control" th:field="*{openTime}">
+                                     </div>
+                                 </div>
+                                 
+                                 <div class="form-group row mb-3">
+                                     <div class="col-md-4">
+                                         <label for="closeTime" class="col-form-label text-md-left fw-bold">営業終了時間</label>
+                                     </div>
+                                     <div class="col-md-8">
+                                         <div th:if="${#fields.hasErrors('closeTime')}" class="text-danger small mb-2" th:errors="*{closeTime}"></div>
+                                         <input type="text" class="form-control" th:field="*{closeTime}">
+                                     </div>
+                                 </div>                                                               
                                                                                                                          
                                  <div class="form-group row mb-3">
                                      <div class="col-md-4">
@@ -116,12 +142,12 @@
                                                                                                                          
                                  
                                  <div class="form-group d-flex justify-content-center my-4">
-                                     <button type="submit" class="btn text-white shadow-sm w-50 tabelog-btn">更新</button>
+                                     <button type="submit" class="btn text-white shadow-sm w-50 tabelog-btn">登録</button>
                                  </div>
                              </form>                                                                         
                          </div>
                      </div>
-                 </div>                 
+                 </div>                
              </main>
              
              <!-- フッター -->

@@ -32,8 +32,8 @@ import com.example.tabelog.repository.RestaurantRepository;
              String imageName = imageFile.getOriginalFilename(); 
              String hashedImageName = generateNewFileName(imageName);
              Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-             copyImageName(imageFile, filePath);
-             restaurant.setImageFile(hashedImageName);
+             copyImageFile(imageFile, filePath);
+             restaurant.setImageName(hashedImageName);
          }
          
          restaurant.setName(restaurantRegisterForm.getName()); 
@@ -49,27 +49,28 @@ import com.example.tabelog.repository.RestaurantRepository;
          restaurant.setPhoneNumber(restaurantRegisterForm.getPhoneNumber());
                      
          restaurantRepository.save(restaurant);
+         
      }  
      
      @Transactional
      public void update(RestaurantEditForm restaurantEditForm) {
          Restaurant restaurant = restaurantRepository.getReferenceById(restaurantEditForm.getId());
-         MultipartFile imageFile = restaurantEditForm.getImage_name();
+         MultipartFile imageFile = restaurantEditForm.getImageFile();
          
          if (!imageFile.isEmpty()) {
              String imageName = imageFile.getOriginalFilename(); 
              String hashedImageName = generateNewFileName(imageName);
              Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-             copyImageName(imageFile, filePath);
-             restaurant.setImageFile(hashedImageName);
+             copyImageFile(imageFile, filePath);
+             restaurant.setImageName(hashedImageName);
          }
          
          restaurant.setName(restaurantEditForm.getName()); 
          restaurant.setCategory(restaurantEditForm.getCategory());
          restaurant.setCapacity(restaurantEditForm.getCapacity());
          restaurant.setDescription(restaurantEditForm.getDescription());
-         restaurant.setPriceHigh(restaurantEditForm.getPrice_high());
-         restaurant.setPriceLow(restaurantEditForm.getPrice_low());
+         restaurant.setPriceHigh(restaurantEditForm.getPriceHigh());
+         restaurant.setPriceLow(restaurantEditForm.getPriceLow());
          restaurant.setOpenTime(restaurantEditForm.getOpenTime());
          restaurant.setCloseTime(restaurantEditForm.getCloseTime());
          restaurant.setPostalCode(restaurantEditForm.getPostalCode());
@@ -90,9 +91,9 @@ import com.example.tabelog.repository.RestaurantRepository;
      }     
      
      // 画像ファイルを指定したファイルにコピーする
-     public void copyImageName(MultipartFile imageName, Path filePath) {           
+     public void copyImageFile(MultipartFile imageFile, Path filePath) {           
          try {
-             Files.copy(imageName.getInputStream(), filePath);
+             Files.copy(imageFile.getInputStream(), filePath);
          } catch (IOException e) {
              e.printStackTrace();
          }          

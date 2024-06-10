@@ -3,9 +3,12 @@
 	DROP TABLE IF EXISTS verification_tokens;
 	DROP TABLE IF EXISTS review;
 	DROP TABLE IF EXISTS users;
+	DROP TABLE IF EXISTS restaurants;
+	DROP TABLE IF EXISTS restaurants;
 	
 		-- ここから新規テーブル文 --
-		
+	
+	-- rolesテーブル --	
 	CREATE TABLE IF NOT EXISTS roles (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL
@@ -43,7 +46,7 @@
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
 	category VARCHAR(50) NOT NULL,
-	image_file VARCHAR(255),
+	image_name VARCHAR(255),
 	description VARCHAR(255) NOT NULL,
 	price_high INT NOT NULL,
 	price_low INT NOT NULL,

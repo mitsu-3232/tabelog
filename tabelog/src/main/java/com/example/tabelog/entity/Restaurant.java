@@ -27,8 +27,8 @@ public class Restaurant {
     @Column(name = "category")
     private String category;
     
-    @Column(name = "image_file")
-    private String imageFile;
+    @Column(name = "image_name")
+    private String imageName;
 
     @Column(name = "description")
     private String description;
@@ -38,6 +38,9 @@ public class Restaurant {
     
     @Column(name = "price_low")
     private Integer priceLow;
+    
+    @Column(name = "capacity")
+    private Integer capacity;
 
     @Column(name = "open_time")
     private LocalTime openTime;
@@ -53,9 +56,6 @@ public class Restaurant {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-
-    @Column(name = "capacity")
-    private Integer capacity;
     
     @Column(name = "created_at", insertable = false, updatable = false)
     private Timestamp createdAt;

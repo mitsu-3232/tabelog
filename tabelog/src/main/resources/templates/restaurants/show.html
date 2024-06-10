@@ -5,11 +5,11 @@
               
          <div th:replace="~{fragment :: styles}"></div>
          
-         <!-- Flatpickr -->
+         <!-- Flatpickr １日だけ予約できるカレンダーに変更するかも-->
          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
            
-         <title>民宿詳細</title>   
+         <title>店舗詳細</title>   
      </head>
      <body>
          <div class="tabelog-wrapper">
@@ -23,20 +23,20 @@
                              <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                  <ol class="breadcrumb mb-0">                        
                                      <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-                                     <li class="breadcrumb-item"><a th:href="@{/houses}">民宿一覧</a></li>
-                                     <li class="breadcrumb-item active" aria-current="page">民宿詳細</li>
+                                     <li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
+                                     <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
                                  </ol>
                              </nav> 
                              
-                             <h1 class="mb-4 text-center" th:text="${house.getName()}"></h1>                                                           
+                             <h1 class="mb-4 text-center" th:text="${restaurant.getName()}"></h1>                                                           
                              
                              <div th:if="${errorMessage}" class="alert alert-danger">
                                  <span th:text="${errorMessage}"></span>
                              </div>                                                                         
                              
                              <div class="mb-4">
-                                 <img th:if="${house.getImageName()}" th:src="@{/storage/__${house.getImageName()}__}" class="w-100" alt="民宿画像">
-                                 <img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+                                 <img th:if="${restaurant.getImageFile()}" th:src="@{/storage/__${restaurant.getImageFile()}__}" class="w-100" alt="店舗画像">
+                                 <img th:unless="${restaurant.getImageFile()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
                              </div> 
                              
                              <div class="container">  
@@ -44,11 +44,11 @@
                                      <div class="col-lg-8 container mb-4">            
                                          <div class="row pb-2 mb-2 border-bottom">
                                              <div class="col-4">
-                                                 <span class="fw-bold">民宿名</span>
+                                                 <span class="fw-bold">店舗名</span>
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${house.getName()}"></span>
+                                                 <span th:text="${restaurant.getName()}"></span>
                                              </div>
                                          </div>                    
                      
@@ -58,27 +58,57 @@
                                              </div>
                      
                                              <div class="col">
-                                                 <span class="tabelog-pre-wrap" th:text="${house.getDescription()}"></span>
+                                                 <span class="tabelog-pre-wrap" th:text="${restaurant.getDescription()}"></span>
                                              </div>
                                          </div>
                      
                                          <div class="row pb-2 mb-2 border-bottom">
                                              <div class="col-4">
-                                                 <span class="fw-bold">宿泊料金</span>
+                                                 <span class="fw-bold">上限料金</span>
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円'}"></span>
+                                                 <span th:text="${#numbers.formatInteger(restaurant.getPriceHigh(), 1, 'COMMA') + '円'}"></span>
+                                             </div>
+                                         </div> 
+                                         
+                                         <div class="row pb-2 mb-2 border-bottom">
+                                             <div class="col-4">
+                                                 <span class="fw-bold">下限料金</span>
+                                             </div>
+                     
+                                             <div class="col">
+                                                 <span th:text="${#numbers.formatInteger(restaurant.getLow(), 1, 'COMMA') + '円'}"></span>
                                              </div>
                                          </div> 
                                          
                                         <div class="row pb-2 mb-2 border-bottom">
                                              <div class="col-4">
-                                                 <span class="fw-bold">定員</span>
+                                                 <span class="fw-bold">予約可能人数</span>
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${house.getCapacity() + '人'}"></span>
+                                                 <span th:text="${restaurant.getCapacity() + '人'}"></span>
+                                             </div>
+                                         </div>   
+                                         
+                                         <div class="row pb-2 mb-2 border-bottom">
+                                             <div class="col-4">
+                                                 <span class="fw-bold">営業開始時間</span>
+                                             </div>
+                     
+                                             <div class="col">
+                                                 <span th:text="${restaurant.getOpenTime()}"></span>
+                                             </div>
+                                         </div>   
+                                         
+                                         <div class="row pb-2 mb-2 border-bottom">
+                                             <div class="col-4">
+                                                 <span class="fw-bold">営業終了時間</span>
+                                             </div>
+                     
+                                             <div class="col">
+                                                 <span th:text="${restaurant.getCloseTime()}"></span>
                                              </div>
                                          </div>                                
                                          
@@ -88,7 +118,7 @@
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${house.getPostalCode()}"></span>
+                                                 <span th:text="${restaurant.getPostalCode()}"></span>
                                              </div>
                                          </div>   
                                          
@@ -98,7 +128,7 @@
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${house.getAddress()}"></span>
+                                                 <span th:text="${restaurant.getAddress()}"></span>
                                              </div>
                                          </div>   
                                          
@@ -108,7 +138,7 @@
                                              </div>
                      
                                              <div class="col">
-                                                 <span th:text="${house.getPhoneNumber()}"></span>
+                                                 <span th:text="${restaurant.getPhoneNumber()}"></span>
                                              </div>
                                          </div>                                
                                      </div>
@@ -122,18 +152,21 @@
                                          </div>  
                                      </div>
                                      
-                                                                          <div sec:authorize="isAuthenticated()" class="col-lg-4 px-0 ps-lg-4 mb-4">                  
+                                     <!--予約フォーム-->
+                                     <div sec:authorize="isAuthenticated()" class="col-lg-4 px-0 ps-lg-4 mb-4">                  
                                          <div class="card">
                                              <div class="card-body"> 
-                                                 <form method="get" th:action="@{/houses/__${house.getId()}__/reservations/input}" th:object="${reservationInputForm}">                                                                                                                                                                       
+								                                    
+                                                 <form method="get" th:action="@{/restaurants/__${restaurant.getId()}__/reservations/input}" th:object="${reservationInputForm}"> 
+													 <!--fromCheckinDateToCheckoutDateをfromreservedDateに変更でいい？-->                                                                                                                                                                      
                                                      <div class="form-group mb-2">                                            
-                                                         <label for="fromCheckinDateToCheckoutDate" class="col-form-label text-md-left fw-bold">チェックイン・チェックアウト</label>    
-                                                         <div th:if="${#fields.hasErrors('fromCheckinDateToCheckoutDate')}" class="text-danger small mb-2" th:errors="*{fromCheckinDateToCheckoutDate}"></div>                                          
-                                                         <input type="text" class="form-control" th:field="*{fromCheckinDateToCheckoutDate}">                                                                     
+                                                         <label for="reservedDate" class="col-form-label text-md-left fw-bold">チェックイン・チェックアウト</label>    
+                                                         <div th:if="${#fields.hasErrors('fromreservedDate')}" class="text-danger small mb-2" th:errors="*{fromreservedDate}"></div>                                          
+                                                         <input type="text" class="form-control" th:field="*{fromreservedDate}">                                                                     
                                                      </div>
                                                      
                                                      <div class="form-group mb-4">                                            
-                                                         <label for="numberOfPeople" class="col-form-label text-md-left fw-bold">宿泊人数</label>  
+                                                         <label for="numberOfPeople" class="col-form-label text-md-left fw-bold">予約人数</label>  
                                                          <div th:if="${#fields.hasErrors('numberOfPeople')}" class="text-danger small mb-2" th:errors="*{numberOfPeople}"></div>                                            
                                                          <input type="number" class="form-control" th:field="*{numberOfPeople}" min="1">                                                                     
                                                      </div>
@@ -158,7 +191,7 @@
          
          <div th:replace="~{fragment :: scripts}"></div> 
          
-                  <!-- Flatpickr -->
+                  <!-- Flatpickr １日だけ予約できるカレンダーに変更するかも -->
          <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
          <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
          <script th:src="@{/js/flatpickr.js}"></script>        
