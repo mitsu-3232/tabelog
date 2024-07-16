@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+//飲食店用のモデル
 @Entity
 @Table(name = "restaurants")
 @Data

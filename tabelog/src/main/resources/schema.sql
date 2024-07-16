@@ -6,7 +6,7 @@
 	DROP TABLE IF EXISTS restaurants;
 	DROP TABLE IF EXISTS restaurants;
 	
-		-- ここから新規テーブル文 --
+	-- ここから新規テーブル文 --
 	
 	-- rolesテーブル --	
 	CREATE TABLE IF NOT EXISTS roles (
